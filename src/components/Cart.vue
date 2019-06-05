@@ -16,7 +16,7 @@
 					<td class="td_chk"><input type="checkbox" v-model="single.completed" name="singlecheck"/></td>
 					<td class="td_item">
 						<div>
-							<img :src="'../static/pics/' + single.title+'.jpg'" alt="single"/><p>{{single.title}}</p>
+							<img :src="'../static/pics/' + single.isbn+'.jpg'" alt="single"/><p>{{single.title}}</p>
 						</div>
 					</td>
 					<td class="td_info">
@@ -62,6 +62,7 @@
 			...mapGetters({
 				cart:'getCart',
 				hw:'getHW'
+
 			}),
 			selectedSum(){
 				return this.cart.filter(function(e){
@@ -87,11 +88,17 @@
 				return sum
 			},
 			//点击单个选择到全部选到时，会将全选按钮一起带动
-			isAll(){
-				return this.cart.every(function(e){
-					return e.completed
-				})
-			},
+			isAll:{
+        get: function () {
+          return this.cart.every(function (e) {
+            return e.completed
+          })
+        },
+        set: function () {
+
+          }
+
+      },
 			home_first_height:function(){
 				var a= parseInt(this.hw.h)-200
 				return a<389?389:a
@@ -133,6 +140,7 @@
 					e.completed=false
 			});
 			this.$store.dispatch('changeShow','')
+      console.log("chenggongjiaru",this.cart);
 		},
 	}
 </script>

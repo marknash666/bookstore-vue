@@ -2,7 +2,7 @@
   <div class="shop">
     <ul class="shop_ul">
       <li class="shop_li" v-for="(book,index) in books">
-        <img :src="'../static/pics/' + book.title+'.jpg'" alt="good" class="good_img" @mouseover="changeFlagTrue(index)" />
+        <img :src="'../static/pics/' + book.isbn+'.jpg'" alt="good" class="good_img" @mouseover="changeFlagTrue(index)" />
         <div class="good_info">
           <p @click="changeSelectedItem(index)">
             <router-link to="/BookItem" class="title_info">{{book.title}}</router-link>
@@ -38,10 +38,11 @@ import Qs from 'qs'
           price:38.70,
           content:'',
           author:'',
+          isbn:'',
           flag: false ,
           publisher:'',
           priced:"",
-          src: ""
+          completed:false
         }
 			}
 		},
@@ -56,6 +57,7 @@ import Qs from 'qs'
             // Add image_url attribute
             posts.map(post => {
               post.flag = false;
+              post.completed=false;
               post.num=1
             });
             console.log("print computed",this.books);

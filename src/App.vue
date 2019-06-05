@@ -66,6 +66,9 @@ export default {
       scrollTimer:null
     }
   },
+  mounted () {
+    window.addEventListener('unload', this.saveState)
+  },
   computed:{
     ...mapGetters({
       show:'getShow',
@@ -106,10 +109,17 @@ export default {
           now=scrollTop-step;
         },10)
       }
+      saveState ()
+      {
+        sessionStorage.setItem('state', JSON.stringify(this.$store.state))
+      }
       
     },
     changeLoginway(type){
         this.$store.dispatch('changeLoginway',type)
+    },
+    saveState () {
+      sessionStorage.setItem('state', JSON.stringify(this.$store.state))
     }
   },
    created(){

@@ -8,6 +8,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
+import createPersistedState from "vuex-persistedstate"
 
 Vue.use(Vuex)
 
@@ -383,10 +384,11 @@ const mutations={
 		//查看购物车是否已经有相同的商品，信息都一样
 		
 		if(!cart.length){
-			cart.push(thing)	
+			cart.push(thing)
+
 		}else{
 			var flag=cart.some(function(e){
-				return e.color==thing.color&&e.size==thing.size&&e.src==thing.src
+				return e.title==thing.title
 			})
 			try{
 				if(!flag){
@@ -394,7 +396,7 @@ const mutations={
 					throw new Error("can't find")
 				}
 				cart.forEach(function(e,index){
-					if(e.color==thing.color&&e.size==thing.size&&e.src==thing.src){
+					if(e.title==thing.title){
 						cart[index].num+=thing.num;
 						foreach.break=new Error("StopIteration");
 					}
@@ -424,7 +426,10 @@ const mutations={
 	},
 	CHANGE_LOGINWAY(state,type){
 		state.loginway=type
-	}
+	},
+
+
+
 }
 const actions={
 	change_hw({commit},obj){
@@ -527,5 +532,6 @@ export default new Vuex.Store({
 	state,
 	mutations,
 	actions,
-	getters
+	getters,
+  plugins: [createPersistedState()]
 })

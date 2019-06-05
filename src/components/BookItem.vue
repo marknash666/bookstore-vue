@@ -1,7 +1,7 @@
 <template>
 	<div class="shoppingItem">
 		<div class="item_left">
-			<img :src="'../static/pics/' + item.title+'.jpg'" alt="item" class="item_img"/>
+			<img :src="'../static/pics/' + item.isbn+'.jpg'" alt="item" class="item_img"/>
 		</div>
 		<div class="item_right">
 			<h1>{{item.title}}</h1>
@@ -94,7 +94,6 @@
 					this.$store.state.selectedItem=clone(this.$store.state.books[0]);
           console.log(this.$store.state.selectedItem);
 					return this.$store.state.selectedItem
-
 				}
 				//不用clone是引用，一个改变另一个跟着改变
 			}
