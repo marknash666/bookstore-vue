@@ -1,16 +1,14 @@
 <template>
-
-
   <div class="shop">
     <ul class="shop_ul">
       <li class="shop_li" v-for="(book,index) in books">
-        <img :src="book.src" alt="good" class="good_img" @mouseover="changeFlagTrue(index)" />
+        <img :src="'../static/pics/' + book.title+'.jpg'" alt="good" class="good_img" @mouseover="changeFlagTrue(index)" />
         <div class="good_info">
           <p @click="changeSelectedItem(index)">
             <router-link to="/BookItem" class="title_info">{{book.title}}</router-link>
           </p>
           <p class="good_info_bottom">
-            <span class="user_info"><img :src="book.shopsSrc" alt="shop"/><span class="user_name">{{book.shopsName}}</span></span>
+            <span class="user_info"><img :src="'../static/images/' + 'shop_jd.png'" alt="shop"/><span class="user_name">{{book.category}}</span></span>
             <span class="price_info"><img :src="'../static/images/price.png'" alt="price"/><span class="price_num">{{book.price}}</span></span>
           </p>
         </div>
@@ -20,24 +18,51 @@
             <!-- 这里的：class绑定的背景图，对应css在islike.css中 -->
           </router-link>
         </div>
-
       </li>
     </ul>
   </div>
 </template>
 <script type="text/javascript">
 import {mapGetters} from 'vuex'
+import axios from 'axios'
+import Qs from 'qs'
+
 	export default {
 		data (){
 			return {
+        books: {
+          picture:'../static/images/book_1.jpg',
+          title:'并行程序设计导论',
+          shopsSrc:'../static/images/shop_jd.png',
+          category:'京东自营',
+          price:38.70,
+          content:'涵盖并行软件和硬件的方方面面，手把手教你如何利用MPI、PThread 和OpenMP开发高效的并行程序',
+          author:'陈虎',
+          flag: false ,
+          publisher:'美国出版社',
+          priced:250,
+          src: ""
+        }
 			}
 		},
 		created (){
 			this.$store.dispatch('changeShow','shop')//此步改变导航栏
+      var _this =this;
+        axios.get("http://localhost:8080/showBooks")
+          .then(res => {
+            _this.books = res.data.list
+            console.log('print result data',res.data.list);
+          })
+          .catch(function (error) {
+            console.log(error);
+          })
+
+      console.log('print book');
+      console.log(this.books);
 		},
 		computed:mapGetters({
 				goods:'getGoods',
-      books:'getBooks'
+      //books:'getBooks'
 			}),
 		methods:{
 			changeLike(index){
