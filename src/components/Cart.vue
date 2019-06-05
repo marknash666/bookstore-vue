@@ -6,7 +6,7 @@
 				<tr>
 					<th class="th_chk"><div><input type="checkbox" @change="selectAll" id="selectAll" v-model="isAll"/><label for="selectAll">全选</label></div></th>
 					<th class="th_item"></th>
-					<th class="th_info">商品信息</th>
+					<th class="th_info">书籍类别</th>
 					<th class="th_price">单价</th>
 					<th class="th_amount">数量</th>
 					<th class="th_sum">金额</th>
@@ -16,11 +16,11 @@
 					<td class="td_chk"><input type="checkbox" v-model="single.completed" name="singlecheck"/></td>
 					<td class="td_item">
 						<div>
-							<img :src="single.src" alt="single"/><p>{{single.title}}</p>
+							<img :src="'../static/pics/' + single.title+'.jpg'" alt="single"/><p>{{single.title}}</p>
 						</div>
 					</td>
 					<td class="td_info">
-						<p>颜色：{{single.color}}<br/>尺码：{{single.size}}</p>
+						<p>{{single.category}}<br/></p>
 					</td>
 					<td class="td_price">
 						￥{{parseFloat(single.price).toFixed(2)}}

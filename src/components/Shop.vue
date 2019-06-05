@@ -31,16 +31,16 @@ import Qs from 'qs'
 		data (){
 			return {
         books: {
-          picture:'../static/images/book_1.jpg',
-          title:'并行程序设计导论',
-          shopsSrc:'../static/images/shop_jd.png',
-          category:'京东自营',
+          picture:'',
+          title:'',
+          shopsSrc:'',
+          category:'',
           price:38.70,
-          content:'涵盖并行软件和硬件的方方面面，手把手教你如何利用MPI、PThread 和OpenMP开发高效的并行程序',
-          author:'陈虎',
+          content:'',
+          author:'',
           flag: false ,
-          publisher:'美国出版社',
-          priced:250,
+          publisher:'',
+          priced:"",
           src: ""
         }
 			}
@@ -48,39 +48,40 @@ import Qs from 'qs'
 		created (){
 			this.$store.dispatch('changeShow','shop')//此步改变导航栏
       var _this =this;
-        axios.get("http://localhost:8080/showBooks")
+        axios.get("http://localhost:8080/showBooks?start=35")
           .then(res => {
             _this.books = res.data.list
-            console.log('print result data',res.data.list);
+            let posts = _this.books;
+
+            // Add image_url attribute
+            posts.map(post => {
+              post.flag = false;
+              post.num=1
+            });
+            console.log("print computed",this.books);
           })
           .catch(function (error) {
             console.log(error);
           })
 
-      console.log('print book');
-      console.log(this.books);
 		},
-		computed:mapGetters({
-				goods:'getGoods',
-      //books:'getBooks'
-			}),
+    computed: {
+      processedPosts() {
+
+      }
+    },
 		methods:{
 			changeLike(index){
-				this.$store.dispatch('changeLike',index)//改变是否喜欢
+
 			},
 			changeFlagTrue(index){
-				this.$store.dispatch('changeBookFlagTrue',index)//改变是否显示喜欢
+        this.books[index].flag=true;
 			},
 			changeFlagFalse(index,e){
-				var evt=this.getRelatedTarget(e)
-				if(evt.getAttribute('class')){
-					if(!(evt.getAttribute('class').indexOf('like')!=-1)){
-						this.$store.dispatch('changeBookFlagFalse',index)//改变是否显示喜欢
-					}	
-				}
+        this.books[index].flag=false;
 			},
 			changeSelectedItem(index){
-				this.$store.dispatch('changeSelectedBookItem',index)//改变进入商品
+				this.$store.dispatch('changeSelectedBookItem',this.books[index])//改变进入商品
 			},
 			getRelatedTarget: function (event) {
 		        if (event.relatedTarget) {

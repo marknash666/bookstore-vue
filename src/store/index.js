@@ -349,8 +349,8 @@ const mutations={
 		var temp=mutations.clone(state.selectedItem);
 		sessionStorage.setItem('storageItem',JSON.stringify(temp));
 	},
-  CHANGE_SELECTED_BOOK_ITEM(state,index){
-    state.selectedItem=mutations.clone(state.books[index]);
+  CHANGE_SELECTED_BOOK_ITEM(state,itemselect){
+    state.selectedItem=mutations.clone(itemselect);
     var temp=mutations.clone(state.selectedItem);
     sessionStorage.setItem('storageItem',JSON.stringify(temp));
   },

@@ -1,17 +1,17 @@
 <template>
 	<div class="shoppingItem">
 		<div class="item_left">
-			<img :src="item.src" alt="item" class="item_img"/>
+			<img :src="'../static/pics/' + item.title+'.jpg'" alt="item" class="item_img"/>
 		</div>
 		<div class="item_right">
 			<h1>{{item.title}}</h1>
 			<p>
 				<label>简介： </label>
-				<span class="desc">{{item.description}}</span>
+				<span class="desc">{{item.content}}</span>
 			</p>
 			<div>
 				<label>原价：</label>
-				<span class="desc">{{item.original_price}}</span><!-- 点击改变尺寸 -->
+				<span class="desc">{{item.priced}}</span><!-- 点击改变尺寸 -->
 			</div>
       <div>
         <label>定价：</label>
@@ -72,7 +72,7 @@
 						return false
 					}
 					return true
-				};//判断对象是否委空
+				};//判断对象是否为空
 				var clone = function(myObj){
 					if(typeof(myObj) != 'object') return myObj;
 					if(myObj == null) return myObj;
@@ -84,19 +84,24 @@
 				};
 				var storageItem=clone(JSON.parse(sessionStorage.getItem('storageItem')));	
 				if(!isEmptyObj(this.$store.state.selectedItem)){
+          console.log(this.$store.state.selectedItem);
 					return this.$store.state.selectedItem//item改变也会改变state中的selectedItem
 				}else if(!isEmptyObj(storageItem)){
 					this.$store.state.selectedItem=clone(storageItem);//把session里的数据赋给state中的selectedItem
+          console.log(this.$store.state.selectedItem);
 					return this.$store.state.selectedItem
 				}else{
 					this.$store.state.selectedItem=clone(this.$store.state.books[0]);
+          console.log(this.$store.state.selectedItem);
 					return this.$store.state.selectedItem
+
 				}
 				//不用clone是引用，一个改变另一个跟着改变
 			}
 		},
 		created(){
 			this.$store.dispatch('changeShow','shop');//此步改变导航栏
+
 		}
 	}
 </script>
