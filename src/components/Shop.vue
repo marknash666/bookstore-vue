@@ -25,7 +25,7 @@
 <script type="text/javascript">
 import {mapGetters} from 'vuex'
 import axios from 'axios'
-import Qs from 'qs'
+
 
 	export default {
 		data (){
